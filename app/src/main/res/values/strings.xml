@@ -2,5 +2,5 @@
     <string name="app_name">StopWatchAPP</string>
     <string name="play">play</string>
     <string name="stop">stop</string>
-    <string name="refresh">refresh</string>
+    <string name="refresh">reset</string>
 </resources>
