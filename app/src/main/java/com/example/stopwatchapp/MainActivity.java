@@ -1,6 +1,7 @@
 package com.example.stopwatchapp;
 
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import com.google.android.material.button.MaterialButton;
 public class MainActivity extends AppCompatActivity {
     private TextView timerText;
     private MaterialButton playButton, stopButton, refreshButton;
+    private long startTime;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,25 +32,34 @@ public class MainActivity extends AppCompatActivity {
         timerText = findViewById(R.id.timer_text);
         playButton = findViewById(R.id.play_button);
         stopButton = findViewById(R.id.stop_button);
-        refreshButton = findViewById(R.id.refresh_button);
+        refreshButton = findViewById(R.id.reset_button);
 
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("tag", "onclickが呼ばれたよ");
+                startTime = SystemClock.uptimeMillis();
+                // TODO: 表示更新処理
+                playButton.setEnabled(false);
+                stopButton.setEnabled(true);
+                refreshButton.setEnabled(false);
             }
         });
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("tag", "onclickが呼ばれたよ");
+                // TODO:
+                playButton.setEnabled(true);
+                stopButton.setEnabled(false);
+                refreshButton.setEnabled(true);
             }
         });
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("tag","onclickが呼ばれたよ");
+                startTime = 0L;
+                timerText.setText("00:00:00");
             }
         });
+        timerText.setText("00:00:00");
     }
 }
