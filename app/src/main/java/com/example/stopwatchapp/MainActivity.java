@@ -1,6 +1,8 @@
 package com.example.stopwatchapp;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
@@ -14,11 +16,29 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.button.MaterialButton;
 
+import java.text.MessageFormat;
+
 public class MainActivity extends AppCompatActivity {
     private TextView timerText;
     private MaterialButton playButton, stopButton, refreshButton;
-    private long startTime;
 
+    private int seconds, minutes, milliSeconds;
+    private long millisecond, startTime, timeBuff, updateTime = 0L;
+    Handler handler;
+    private final Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            millisecond = SystemClock.uptimeMillis() = startTime;
+            updateTime = timeBuff + millisecond;
+            seconds = (int) (updateTime / 1000 );
+            minutes = seconds / 60;
+            seconds = seconds % 60;
+            milliSeconds = (int) (updateTime % 1000);
+
+            timerText.setText(MessageFormat.format( {0}:{1}:{2}, minutes, String.format(Local.getDefoult(),"%02d", seconds), String.format(Local.getDefoult(),"%02d", milliSeconds)));
+            handler.postDelayed(this, 0);
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,32 +54,46 @@ public class MainActivity extends AppCompatActivity {
         stopButton = findViewById(R.id.stop_button);
         refreshButton = findViewById(R.id.reset_button);
 
+        handler = new Handler(Looper.getMainLooper());
+
+        start.setOnClickListener(new View.OnClickListener() {
+
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startTime = SystemClock.uptimeMillis();
-                // TODO: 表示更新処理
+                handler.postDelayed(runnable. 0);
                 playButton.setEnabled(false);
                 stopButton.setEnabled(true);
                 refreshButton.setEnabled(false);
             }
         });
+
         stopButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // TODO:
+                timeBuff += millisecond;
+                handler.removeCallbacks(runnable);
                 playButton.setEnabled(true);
                 stopButton.setEnabled(false);
                 refreshButton.setEnabled(true);
             }
         });
+
         refreshButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                millisecond = 0L;
                 startTime = 0L;
+                timeBuff = 0L;
+                updateTime = 0L;
+                seconds = 0;
+                minutes = 0;
+                milliSeconds = 0;
                 timerText.setText("00:00:00");
             }
         });
+
         timerText.setText("00:00:00");
     }
 }
