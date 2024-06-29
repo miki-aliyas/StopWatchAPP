@@ -1,19 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/main_bg"
     tools:context=".MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="16dp"
-        android:layout_gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:layout_marginTop="88dp">
+        
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/timer_blue"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/stopwatch"
+            android:textAllCaps="true"
+            android:textSize="32sp"
+            android:textStyle="bold"
+            android:textColor="@color/indigo"
+            android:layout_marginTop="24dp"/>
 
         <TextView
             android:id="@+id/timer_text"
@@ -21,42 +37,77 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:text="00:00:00"
-            android:textSize="60sp"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:orientation="horizontal">
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/play_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/play"
-                app:icon="@drawable/ic_play"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/stop_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/stop"
-                android:layout_marginStart="8dp"
-                android:layout_marginEnd="8dp"
-                app:icon="@drawable/ic_stop"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/reset_button"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="@string/refresh"
-                app:icon="@drawable/ic_refresh"/>
-
-        </LinearLayout>
+            android:textSize="48sp"
+            android:textColor="@color/white"
+            android:layout_marginTop="48dp"/>
 
     </LinearLayout>
 
-</FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/play_button"
+            android:background="@color/gray"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="236dp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/play"
+                android:textAllCaps="true"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_bg" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/stop_button"
+            android:background="@color/gray"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="142dp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/stop"
+                android:textAllCaps="true"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_bg" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/reset_button"
+            android:background="@color/gray"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="46dp"
+            android:layout_gravity="bottom"
+            android:layout_marginBottom="48dp"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/refresh"
+                android:textAllCaps="true"
+                android:textSize="32sp"
+                android:textStyle="bold"
+                android:textColor="@color/main_bg" />
+        </LinearLayout>
+    </FrameLayout>
+
+</LinearLayout>

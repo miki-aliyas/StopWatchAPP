@@ -6,6 +6,7 @@ import android.os.Looper;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
@@ -17,28 +18,28 @@ import androidx.core.view.WindowInsetsCompat;
 import com.google.android.material.button.MaterialButton;
 
 import java.text.MessageFormat;
+import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
     private TextView timerText;
-    private MaterialButton playButton, stopButton, refreshButton;
-
+    private LinearLayout playButton, stopButton, refreshButton;
     private int seconds, minutes, milliSeconds;
     private long millisecond, startTime, timeBuff, updateTime = 0L;
     Handler handler;
     private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            millisecond = SystemClock.uptimeMillis() = startTime;
+            millisecond = SystemClock.uptimeMillis() - startTime;
             updateTime = timeBuff + millisecond;
             seconds = (int) (updateTime / 1000 );
             minutes = seconds / 60;
             seconds = seconds % 60;
             milliSeconds = (int) (updateTime % 1000);
 
-            timerText.setText(MessageFormat.format( {0}:{1}:{2}, minutes, String.format(Local.getDefoult(),"%02d", seconds), String.format(Local.getDefoult(),"%02d", milliSeconds)));
+            timerText.setText(MessageFormat.format("{0}:{1}:{2}", minutes, String.format(Locale.getDefault(),"%02d", seconds), String.format(Locale.getDefault(),"%02d", milliSeconds)));
             handler.postDelayed(this, 0);
         }
-    }
+    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,16 +57,17 @@ public class MainActivity extends AppCompatActivity {
 
         handler = new Handler(Looper.getMainLooper());
 
-        start.setOnClickListener(new View.OnClickListener() {
-
         playButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 startTime = SystemClock.uptimeMillis();
-                handler.postDelayed(runnable. 0);
+                handler.postDelayed(runnable, 0);
                 playButton.setEnabled(false);
+                playButton.setVisibility(View.GONE);
                 stopButton.setEnabled(true);
+                stopButton.setVisibility(View.VISIBLE);
                 refreshButton.setEnabled(false);
+                refreshButton.setVisibility(View.GONE);
             }
         });
 
@@ -75,8 +77,10 @@ public class MainActivity extends AppCompatActivity {
                 timeBuff += millisecond;
                 handler.removeCallbacks(runnable);
                 playButton.setEnabled(true);
+                playButton.setVisibility(View.VISIBLE);
                 stopButton.setEnabled(false);
                 refreshButton.setEnabled(true);
+                refreshButton.setVisibility(View.VISIBLE);
             }
         });
 
